@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard</title>
+</head>
+<body>
+  <h1>Admin Dashboard</h1>
+  <p>Welcome, Admin. Use the tools below to manage users and posts.</p>
+
+  <h2>Users</h2>
+  <table border="1">
+      <tr>
+          <th>ID</th>
+          <th>Username</th>
+          <th>Email</th>
+          <th>Actions</th>
+      </tr>
+      {% for user in users %}
+      <tr>
+          <td>{{ user[0] }}</td>
+          <td>{{ user[1] }}</td>
+          <td>{{ user[2] or "N/A" }}</td>
+          <td>
+              <a href="{{ url_for('delete_user', user_id=user[0]) }}">Delete</a>
+          </td>
+      </tr>
+      {% endfor %}
+  </table>
+
+  <h2>Posts</h2>
+  <table border="1">
+      <tr>
+          <th>ID</th>
+          <th>Author</th>
+          <th>Content</th>
+          <th>Actions</th>
+      </tr>
+      {% for post in posts %}
+      <tr>
+          <td>{{ post[0] }}</td>
+          <td>{{ post[1] }}</td>
+          <td>{{ post[2] }}</td>
+          <td>
+              <a href="{{ url_for('delete_post', post_id=post[0]) }}">Delete</a>
+          </td>
+      </tr>
+      {% endfor %}
+  </table>
+</body>
+</html>
