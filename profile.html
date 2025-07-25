@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>{{ username }}'s Profile</h2>
+
+{% if avatar %}
+    <img src="{{ url_for('uploaded_file', filename=avatar) }}" class="avatar-large">
+{% else %}
+    <img src="{{ url_for('static', filename='avatars/default.png') }}" class="avatar-large">
+{% endif %}
+{% if cover %}
+    <img src="{{ url_for('uploaded_file', filename=cover) }}" class="cover-photo">
+{% endif %}
+
+{% if bio %}
+    <p><strong>Bio:</strong> {{ bio }}</p>
+{% endif %}
+
+{% if session.username != username %}
+    {% if is_following %}
+        <form action="{{ url_for('unfollow', username=username) }}" method="GET">
+            <button type="submit">Unfollow</button>
+        </form>
+    {% else %}
+        <form action="{{ url_for('follow', username=username) }}" method="GET">
+            <button type="submit">Follow</button>
+        </form>
+    {% endif %}
+{% endif %}
+
+{% if posts %}
+    {% for post in posts %}
+        <div class="post">
+            <p>{{ post[1] }}</p>
+            {% if post[2] %}
+                {% if post[2].endswith('.mp4') %}
+                  <video controls width="300">
+                      <source src="{{ url_for('uploaded_file', filename=post[2]) }}" type="video/mp4">
+                      Your browser does not support the video tag.
+                  </video>
+                {% else %}
+                  <img src="{{ url_for('uploaded_file', filename=post[2]) }}" class="post-image">
+                {% endif %}
+            {% endif %}
+        </div>
+    {% endfor %}
+{% else %}
+    <p>This user has no posts yet.</p>
+{% endif %}
+{% endblock %}
