@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Notifications - InstaFlare</title>
+</head>
+<body>
+<h2>Notifications</h2>
+{% if notifications %}
+    <ul>
+    {% for note in notifications %}
+        <li>{{ note[1] }} <small>({{ note[2] }})</small></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>You have no new notifications.</p>
+{% endif %}
+</body>
+</html>
