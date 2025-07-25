@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Profile</title>
+</head>
+<body>
+    <h2>Edit Profile</h2>
+    <form action="{{ url_for('edit_profile') }}" method="POST" enctype="multipart/form-data">
+        <label for="email">Email:</label><br>
+        <input type="email" id="email" name="email" value="{{ user[3] }}"><br><br>
+
+        <label for="avatar">Avatar:</label><br>
+        <input type="file" id="avatar" name="avatar"><br><br>
+
+        <label for="cover">Cover Photo:</label><br>
+        <input type="file" id="cover" name="cover"><br><br>
+
+        <button type="submit">Update Profile</button>
+    </form>
+</body>
+</html>
