@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block content %}
+{% if view == "saved" %}
+  <h2>📁 Your Saved Posts</h2>
+{% else %}
+  <h2>🏠 News Feed</h2>
+{% endif %}
+{% if suggested %}
+  <div class="suggested">
+      <h3>👥 Suggested Users to Follow</h3>
+      <ul>
+      {% for user in suggested %}
+          <li>
+              <a href="{{ url_for('profile', username=user[1]) }}">@{{ user[1] }}</a>
+              <a href="{{ url_for('chat', user_id=user[0]) }}">Message</a>
+          </li>
+      {% endfor %}
+      </ul>
+  </div>
+{% endif %}
+{% if view != "saved" %}
+<form action="{{ url_for('post') }}" method="POST" enctype="multipart/form-data">
+    <textarea name="content" placeholder="What's on your mind?" required></textarea><br>
+    <label>Attach image: <input type="file" name="image"></label><br>
+    <button type="submit">Post</button>
+</form>
+{% endif %}
+
+<hr>
+
+{% for post in posts %}
+    <div class="post">
+        {% if post[4] %}
+            <img src="{{ url_for('uploaded_file', filename=post[4]) }}" class="avatar">
+        {% else %}
+            <img src="{{ url_for('static', filename='avatars/default_avatar.png') }}" class="avatar">
+        {% endif %}
+        <strong><a href="{{ url_for('profile', username=post[1]) }}">@{{ post[1] }}</a></strong>
+        <p>{{ post[2] }}</p>
+        {% if post[3] %}
+          {% if post[3].endswith('.mp4') %}
+            <video controls width="300">
+                <source src="{{ url_for('uploaded_file', filename=post[3]) }}" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+          {% else %}
+            <img src="{{ url_for('uploaded_file', filename=post[3]) }}" class="post-image">
+          {% endif %}
+        {% endif %}
+        <p>❤️ {{ post[5] }} <a href="{{ url_for('like', post_id=post[0]) }}">Like</a> | <a href="{{ url_for('save', post_id=post[0]) }}">Save/Unsave</a></p>
+        <a href="{{ url_for('chat', user_id=post[6]) }}">Message</a> |
+        {% if session.username == post[1] %}
+            <a href="{{ url_for('edit_post', post_id=post[0]) }}">Edit</a> |
+            <a href="{{ url_for('delete_post', post_id=post[0]) }}">Delete</a>
+        {% endif %}
+        <form method="POST" action="{{ url_for('comment', post_id=post[0]) }}">
+            <input type="text" name="comment" placeholder="Add a comment...">
+            <button type="submit">Comment</button>
+        </form>
+        <div class="comments">
+            {% if comments[post[0]] %}
+                <strong>Comments:</strong>
+                {% for comment in comments[post[0]] %}
+                    <p><em>@{{ comment[0] }}:</em> {{ comment[1] }}</p>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+{% endfor %}
+{% endblock %}
