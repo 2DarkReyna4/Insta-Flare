@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Edit Your Post</h2>
+<form method="POST">
+    <textarea name="content" required>{{ content }}</textarea><br>
+    <button type="submit">Update Post</button>
+</form>
+{% endblock %}
