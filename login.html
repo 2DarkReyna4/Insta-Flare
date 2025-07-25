@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Login to InstaFlare</h2>
+<div class="login-box">
+    <form method="POST">
+        <input type="text" name="username" placeholder="Username" required><br>
+        <input type="password" name="password" placeholder="Password" required><br>
+        <button type="submit">Login</button>
+    </form>
+    <p>No account? <a href="{{ url_for('register') }}">Register here</a></p>
+</div>
+{% endblock %}
