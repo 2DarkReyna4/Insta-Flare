@@ -5,14 +5,6 @@ itsdangerous==2.1.2
 click==8.1.7
 MarkupSafe==2.1.5
 
-# Optional features you've used
-python-dotenv==1.0.1  # If using .env files
-gunicorn==21.2.0      # For production on Render
-
-# Database
-sqlite3  # (Built-in in Python, not needed in requirements.txt unless using a wrapper)
-
-# If using date formatting
+python-dotenv==1.0.1
+gunicorn==21.2.0
 pytz==2024.1
-
-# If you're using any other modules like Pillow, bcrypt, etc., add them below
