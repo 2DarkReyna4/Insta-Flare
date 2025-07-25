@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Inbox</h2>
+{% if conversations %}
+    <ul>
+    {% for user in conversations %}
+        <li><a href="{{ url_for('chat', user_id=user[0]) }}">Chat with @{{ user[1] }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No conversations yet.</p>
+{% endif %}
+{% endblock %}
